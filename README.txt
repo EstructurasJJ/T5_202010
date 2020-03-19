@@ -1,2 +1,3 @@
-Santiago Bobadilla 201820728
-Juan Jose Beltran 201819446
+Juan José Beltrán Ruiz
+4 semestre
+201819446
