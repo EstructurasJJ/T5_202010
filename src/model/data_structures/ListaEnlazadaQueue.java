@@ -89,5 +89,28 @@ public class ListaEnlazadaQueue <T extends Comparable<T>>
 		return eliminado;
 	}
 	
-
+	/////////////////////////////////////////////////////////
+	
+	public Iterator<T> iterator()
+	{
+		return new ListIterator();
+	}
+	
+	private class ListIterator implements Iterator<T>
+	{
+		private Node<T> actual = primerNodo;
+		
+		public boolean hasNext()
+		{
+			return actual!=null;
+		}
+		public T next()
+		{
+			T dat = (T) actual.darInfoDelComparendo();
+			actual=actual.darSiguiente();
+			return dat;
+		}
+	
+		
+	}
 }

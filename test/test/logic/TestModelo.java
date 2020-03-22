@@ -2,7 +2,7 @@ package test.logic;
 
 import static org.junit.Assert.*;
 
-import model.data_structures.MaxHeapCP;
+
 import model.logic.Comparendo;
 import model.logic.Modelo;
 

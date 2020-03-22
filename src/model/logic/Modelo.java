@@ -16,8 +16,6 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSyntaxException;
 
 import model.data_structures.ListaEnlazadaQueue;
-import model.data_structures.MaxColaCP;
-import model.data_structures.MaxHeapCP;
 import model.data_structures.Node;
 
 
@@ -32,26 +30,18 @@ public class Modelo
 	private double maxLatitud = -1000000000;
 	private double maxLongitud = -1000000000;
 
-	private MaxHeapCP<Comparendo> datosHeap;
-	private MaxColaCP<Comparendo> datosCola;
 	private ListaEnlazadaQueue<Comparendo> booty = new ListaEnlazadaQueue<Comparendo>();
 
 	public Modelo()
 	{
 		parteDelComparendo = "";
-		datosHeap = new MaxHeapCP<Comparendo>();
 		booty = new ListaEnlazadaQueue<Comparendo>();
 	}
 
 
-	public MaxHeapCP<Comparendo> darDatos()
+	public ListaEnlazadaQueue<Comparendo> darDatos()
 	{
-		return datosHeap;
-	}
-
-	public MaxColaCP<Comparendo> darMaxCola()
-	{
-		return datosCola;
+		return booty;
 	}
 
 	public int darTamanio()
@@ -310,7 +300,7 @@ public class Modelo
 	}
 
 
-	//TODO TALLER 4 NUEVO
+	//TODO TALLER 5 NUEVO
 
 	public Comparendo[] copiarComparendos()
 	{
@@ -332,103 +322,11 @@ public class Modelo
 		return comparendosCopia;
 	}
 
-	public MaxHeapCP<Comparendo> generarMuestraHeap(int N)
-	{
-		MaxHeapCP<Comparendo> heapProv = new MaxHeapCP<Comparendo>();
-
-		Comparable[] arr = copiarComparendos();
-
-		for(int i=1; i<=N; i++)
-		{
-			int random = (int) Math.floor((booty.darTamanio() * Math.random()));
-			heapProv.añadir((Comparendo) arr[random+1]);
-		}
-
-		return heapProv;
-	}
-
-	public MaxColaCP<Comparendo> generarMuestraCola(int N)
-	{
-		MaxColaCP<Comparendo> colaProv = new MaxColaCP<Comparendo>();
-
-		Comparable[] arr = copiarComparendos();
-
-		for(int i=1; i<=N; i++)
-		{
-			int random = (int) Math.floor((booty.darTamanio() * Math.random()));
-			colaProv.agregar((Comparendo) arr[random]);
-		}
-
-		return colaProv;
-	}
-
-
-
-	public MaxHeapCP<Comparendo> norteMaxHeapCP(int N, String[] listica)
-	{
-		MaxHeapCP<Comparendo> heapProv = new MaxHeapCP<Comparendo>();
-
-		long tiempoComienzo=System.currentTimeMillis();
-		MaxHeapCP<Comparendo> heapAleat = generarMuestraHeap(N);
-		long tiempo= System.currentTimeMillis()-tiempoComienzo;
-		System.out.println("El tiempo en generar la muestra aleatoria fue: " + tiempo + " milisegundos." + "\n----------");
-
-		int cantidad = listica.length;
-
-		Comparable[] arr = heapAleat.darHeap();
-
-		for(int i = 0; i <= cantidad-1; i++)
-		{
-			for(int j = 1; j <= heapAleat.darTamaño(); j++)
-			{
-				if (((Comparendo) arr[j]).darClase_Vehi().equals(listica[i]))
-				{
-					Comparendo compi = (Comparendo) arr[j];
-					heapProv.añadir(compi);
-				}
-			}
-		}
-
-		return heapProv;
-	}
-
-
-	public MaxColaCP<Comparendo> norteMaxColaCP(int N, String[] listica)
-	{
-		MaxColaCP<Comparendo> colaProv = new MaxColaCP<Comparendo>();
-
-		long tiempoComienzo=System.currentTimeMillis();
-		MaxColaCP<Comparendo> colaAleat = generarMuestraCola(N);
-		long tiempo= System.currentTimeMillis()-tiempoComienzo;
-		System.out.println("El tiempo en generar la muestra aleatoria fue: " + tiempo + " milisegundos." + "\n----------");
-
-		Comparable[] a=colaAleat.darDatosEnArreglo();
-		int c=0;
-		while(c<a.length)
-		{
-			for (int i=0;i<listica.length;i++)
-			{
-				String aux="";
-				if (a[c]!=null)
-				{
-					aux = ((Comparendo)a[c]).darClase_Vehi();	
-				}
-
-				String aux2=listica[i];
-				if (aux.equals(listica[i]))
-				{
-					colaProv.agregar((Comparendo)a[c]);
-				}
-			}
-			c++;
-		}
-
-
-		return colaProv;
-	}
-
-
-
-
 
 }
+
+
+
+
+
+

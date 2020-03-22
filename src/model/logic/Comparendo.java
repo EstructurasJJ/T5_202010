@@ -19,15 +19,15 @@ public class Comparendo implements Comparable<Comparendo>
 	private String INFRACCION;
 	private String DES_INFRAC;
 	private String LOCALIDAD;
-	
+
 	private double latitud;
 	private double longitud; 
-	
+
 	//
 	private Date FECHA_HORA;
 	private String MUNICIPIO;
 	//
-	
+
 	public Comparendo ()
 	{
 		OBJECTID = 0;
@@ -37,18 +37,18 @@ public class Comparendo implements Comparable<Comparendo>
 		INFRACCION = "";
 		DES_INFRAC = "";
 		LOCALIDAD = "";
-		
+
 		//
 		FECHA_HORA = new Date();
 		MUNICIPIO = "";
 		//
 	}
-	
+
 	public int darObjectid()
 	{
 		return OBJECTID;
 	}
-	
+
 	//
 	public Date darFecha_Hora()
 	{
@@ -59,7 +59,7 @@ public class Comparendo implements Comparable<Comparendo>
 		return MUNICIPIO;
 	}
 	//
-	
+
 	public String darMedio_Dete()
 	{
 		return MEDIO_DETE;
@@ -84,7 +84,7 @@ public class Comparendo implements Comparable<Comparendo>
 	{
 		return LOCALIDAD;
 	}
-	
+
 	public void asignarObjectid(int i)
 	{
 		OBJECTID = i;
@@ -132,7 +132,7 @@ public class Comparendo implements Comparable<Comparendo>
 	{
 		LOCALIDAD = i;
 	}
-	
+
 	public double darLatitud()
 	{
 		return latitud;
@@ -149,12 +149,12 @@ public class Comparendo implements Comparable<Comparendo>
 	{
 		longitud = i; 
 	}
-	
+
 	public int compareTo(Comparendo compi) 
 	{
 		double latitud1 = latitud;
 		double latitud2 = compi.darLatitud();
-		
+
 		if(latitud1 > latitud2)
 		{
 			return 1;
@@ -168,5 +168,30 @@ public class Comparendo implements Comparable<Comparendo>
 			return 0;
 		}
 	}
-	
+
+
+	//HASH CODE
+
+	public int hashCode()
+	{
+		int hash = 17;
+
+		hash = 31*hash + ((Integer) OBJECTID).hashCode();
+
+		hash = 31*hash + MEDIO_DETE.hashCode();
+		hash = 31*hash + CLASE_VEHI.hashCode();
+		hash = 31*hash + TIPO_SERVI.hashCode();
+		hash = 31*hash + INFRACCION.hashCode();
+		hash = 31*hash + DES_INFRAC.hashCode();
+		hash = 31*hash + LOCALIDAD.hashCode();
+		hash = 31*hash + MUNICIPIO.hashCode();
+
+		hash = 31*hash + ((Double) latitud).hashCode();
+		hash = 31*hash + ((Double) longitud).hashCode();
+
+		hash = 31*hash + FECHA_HORA.hashCode();
+
+		return hash;
+	}
+
 }
