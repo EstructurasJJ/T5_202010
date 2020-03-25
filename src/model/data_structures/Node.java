@@ -6,23 +6,28 @@ import model.logic.Comparendo;
 
 public class Node <T>
 {
-	Comparendo viejoCompa;
+	public T data;
 	Node<T> siguiente;
 	
 	public Node (T elemento)
 	{
-		viejoCompa = (Comparendo) elemento;
+		data = elemento;
 		siguiente = null;
 	}
 	
-	public Comparendo darInfoDelComparendo()
-	{
-		return viejoCompa;
-	}
+//	public Comparendo darInfoDelComparendo()
+//	{
+//		return viejoCompa;
+//	}
+//	
+//	public void definirComparendo(Comparendo nuevo)
+//	{
+//		viejoCompa = nuevo;
+//	}
 	
-	public void definirComparendo(Comparendo nuevo)
+	public T darData()
 	{
-		viejoCompa = nuevo;
+		return data;
 	}
 	
 	public Node<T> darSiguiente()

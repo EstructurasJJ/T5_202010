@@ -15,8 +15,8 @@ public class View
 		public void printMenu()
 		{
 			System.out.println("1. Cargar datos.");
-			System.out.println("2. Mostrar N comparendos con base a una lista de clase de vehiculos.(MaxCola)");
-			System.out.println("3. Mostrar N comparendos con base a una lista de clase de vehiculos.(MaxHeap)");
+			System.out.println("2. Buscar tiempos de viaje por fecha, clase de vehículo e infracción (Tabla de Hash Linear Probing)");
+			System.out.println("3. Pruebas de desempeño - Tabla de Hash Linear Probing");
 			System.out.println("4. Exit");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}

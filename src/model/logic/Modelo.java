@@ -2,8 +2,11 @@ package model.logic;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -17,6 +20,7 @@ import com.google.gson.JsonSyntaxException;
 
 import model.data_structures.ListaEnlazadaQueue;
 import model.data_structures.Node;
+import model.data_structures.TablaHashSondeoLineal;
 
 
 public class Modelo 
@@ -31,32 +35,15 @@ public class Modelo
 	private double maxLongitud = -1000000000;
 
 	private ListaEnlazadaQueue<Comparendo> booty = new ListaEnlazadaQueue<Comparendo>();
+	
+	//////NUEVO TALLER 5/////
+	private TablaHashSondeoLineal<String, Comparendo> HSLBobi;
+	/////////////////////////
 
 	public Modelo()
 	{
 		parteDelComparendo = "";
 		booty = new ListaEnlazadaQueue<Comparendo>();
-	}
-
-
-	public ListaEnlazadaQueue<Comparendo> darDatos()
-	{
-		return booty;
-	}
-
-	public int darTamanio()
-	{
-		return booty.darTamanio();
-	}
-
-	public Comparendo PrimerComparendo()
-	{
-		return booty.darPrimerElemento().darInfoDelComparendo();
-	}
-
-	public Comparendo UltimoComparendo()
-	{
-		return booty.darUltimoElemento().darInfoDelComparendo();
 	}
 
 	public double darMinLatitud()
@@ -76,8 +63,12 @@ public class Modelo
 		return maxLongitud;
 	}
 
-	public void leerGeoJson(String pRuta) 
+	public void leerGeoJson(String pRuta, int capIni) 
 	{	
+		//////NUEVO TALLER 5//////
+		HSLBobi = new TablaHashSondeoLineal<String, Comparendo>(capIni);
+		//////////////////////////
+		
 		JsonParser parser = new JsonParser();
 		FileReader fr = null;
 
@@ -290,36 +281,90 @@ public class Modelo
 
 			coordenadas = false;
 			parteDelComparendo = "";
-
-			booty.enqueue(compaAgregar);
+			
+			/////NUEVO TALLER 5/////
+	
+			String key = getFechaMod(compaAgregar.darFecha_Hora());			
+			key = key + "-" + compaAgregar.darClase_Vehi() + "-" + compaAgregar.darInfraccion();
+			
+			HSLBobi.putInSet(key, compaAgregar);
+			
+			key = "";
+			////////////////////////
+			
 			compaAgregar = null;
 
 			//System.out.println("///AGREGADO///");
 
 		}
 	}
+	
+	public String getFechaMod(Date fechaMod)
+	{
+	    SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
+	    return sf.format(fechaMod);
+	}
 
 
 	//TODO TALLER 5 NUEVO
 
-	public Comparendo[] copiarComparendos()
+	public TablaHashSondeoLineal<String, Comparendo> darHashLineal()
 	{
-		Comparendo[] comparendosCopia = new Comparendo[booty.darTamanio()+1];
-		int contador = 1;
+		return HSLBobi;
+	}
 
-		Node<Comparendo> actual = booty.darPrimerElemento();
-
-		while(actual != null)
+	public void busquedaLinealHash(String fecha, String claseV, String infrac)
+	{
+		String key= fecha + "-" + claseV + "-" + infrac;
+		
+		Iterator<Comparendo> tablita = HSLBobi.getSet(key);
+		
+		while (tablita.hasNext())
 		{
-			Comparendo compi = actual.darInfoDelComparendo();
-			comparendosCopia[contador] = compi;
-
-			contador++;
-			actual = actual.darSiguiente();
+			Comparendo compi = tablita.next();
+			
+			System.out.println("---------------------");
+			System.out.println("Object Id: " + compi.darObjectid());
+			System.out.println("Fecha Hora: " + compi.darFecha_Hora().toString());
+			System.out.println("Infracción: " + compi.darInfraccion());
+			System.out.println("Clase Vehiculo: " + compi.darClase_Vehi());
+			System.out.println("Localidad: " + compi.darLocalidad() + "\n----------");
 
 		}
+	}
+	
+	public ArrayList<Long> analisisTablaLineal()
+	{
+		ArrayList<Long> listaTiempos = new ArrayList<Long>();
+		
+		int llaveExiste= 0;
+		int llaveNOExiste = 0;
+		
+		Iterator<String> iter = HSLBobi.keys();
+		
+		while(iter.hasNext() && llaveExiste <= 8000)
+		{
+			long tiempo= System.currentTimeMillis();
+			HSLBobi.getSet(iter.next());
+			long tiemp=System.currentTimeMillis()-tiempo;
+			
+			listaTiempos.add(tiemp);
+			llaveExiste++;
+		}
 
-		return comparendosCopia;
+		int dos = (int) (Math.random() *999);
+		String llaves = "" + dos;
+		
+		while(llaveNOExiste <= 2000)
+		{
+			long tiempo= System.currentTimeMillis();
+			HSLBobi.getSet(llaves);
+			long tiemp=System.currentTimeMillis()-tiempo;
+			
+			listaTiempos.add(tiemp);
+			llaveNOExiste++;
+		}
+		return listaTiempos;
 	}
 
 

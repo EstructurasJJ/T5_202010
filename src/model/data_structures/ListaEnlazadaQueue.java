@@ -69,14 +69,14 @@ public class ListaEnlazadaQueue <T extends Comparable<T>>
 		}
 		else if(tamanio==1)
 		{
-			eliminado = (T) primerNodo.darInfoDelComparendo();
+			eliminado = (T) primerNodo.darData();
 			primerNodo=null;
 			lastNode=null;
 			tamanio--;
 		}
 		else
 		{
-			eliminado=(T)primerNodo.darInfoDelComparendo();
+			eliminado=(T)primerNodo.darData();
 			Node<T> anteriorPrimero=primerNodo;
 			Node<T> nuevoPrimero=primerNodo.darSiguiente();
 			
@@ -106,7 +106,7 @@ public class ListaEnlazadaQueue <T extends Comparable<T>>
 		}
 		public T next()
 		{
-			T dat = (T) actual.darInfoDelComparendo();
+			T dat = (T) actual.darData();
 			actual=actual.darSiguiente();
 			return dat;
 		}

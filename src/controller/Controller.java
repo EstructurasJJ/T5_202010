@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.data_structures.Node;
@@ -38,50 +39,79 @@ public class Controller {
 			int nHeap;
 			String lista;
 
+			int capIni;
 			switch(option)
 			{
 			case 1:
 
 				//Cargar el archivo
+				
+				System.out.println("Ingresar tamaño inicial de las tablas:");
+				capIni = Integer.parseInt(lector.next());
+				
 
-				modelo.leerGeoJson(JUEGUEMOS);
+				modelo.leerGeoJson(JUEGUEMOS, capIni);
 
 				view.printMessage("Archivo GeoJSon Cargado");
-				view.printMessage("Numero actual de comparendos " + modelo.darTamanio() + "\n----------");
+				view.printMessage("Numero actual de comparendos " + modelo.darHashLineal().darDatos() + "\n----------");
 
 				//Primer Comparendo
 
-				view.printMessage("La información del primer Object Id es: ");
-				view.printMessage("Object Id: " + modelo.PrimerComparendo().darObjectid());
-				view.printMessage("Fecha Hora: " + modelo.PrimerComparendo().darFecha_Hora().toString());
-				view.printMessage("Infracción: " + modelo.PrimerComparendo().darInfraccion());
-				view.printMessage("Clase Vehiculo: " + modelo.PrimerComparendo().darClase_Vehi());
-				view.printMessage("Tipo Servicio: " + modelo.PrimerComparendo().darTipo_Servicio());
-				view.printMessage("Localidad: " + modelo.PrimerComparendo().darLocalidad());
-				view.printMessage("Municipio: " + modelo.PrimerComparendo().darMunicipio() + "\n----------");
-
 				//Último Comparendo
-
-				view.printMessage("La información del último Object Id es: ");
-				view.printMessage("Object Id: " + modelo.UltimoComparendo().darObjectid());
-				view.printMessage("Fecha Hora: " + modelo.UltimoComparendo().darFecha_Hora().toString());
-				view.printMessage("Infracción: " + modelo.UltimoComparendo().darInfraccion());
-				view.printMessage("Clase Vehiculo: " + modelo.UltimoComparendo().darClase_Vehi());
-				view.printMessage("Tipo Servicio: " + modelo.UltimoComparendo().darTipo_Servicio());
-				view.printMessage("Localidad: " + modelo.UltimoComparendo().darLocalidad());
-				view.printMessage("Municipio: " + modelo.UltimoComparendo().darMunicipio() + "\n----------");
-
+				
+				//Información adicional:
+				
+				System.out.println("Número de duplas en tabla hash LinearProbing: " + modelo.darHashLineal().darDatos());
+				System.out.println("Tamaño final del arreglo  de tabla hash LinearProbing: " + modelo.darHashLineal().darCapacidad());
+				System.out.println("Factor de carga en tabla hash LinearProbing: " + modelo.darHashLineal().darFactorCarga());
+				System.out.println("Número de rehashes en tabla hash LinearProbing: " + modelo.darHashLineal().darRehashes() + "\n----------");
 
 				break;
 
 			case 2:
-
+				
+				System.out.println("Ingresar una fecha:");
+				String fecha = lector.next();
+				
+				System.out.println("Ingresar una clase del vehiculo:");
+				String clase = lector.next();
+				
+				System.out.println("Ingresar una infracción:");
+				String infra = lector.next();
+				
+				modelo.busquedaLinealHash(fecha, clase, infra);
 
 				break;
 
 			case 3:
-
-
+				
+				ArrayList<Long> tablaTiempitos = modelo.analisisTablaLineal();
+				
+				long min = tablaTiempitos.get(0);
+				long max = tablaTiempitos.get(0);
+				long suma = 0;
+				long total = tablaTiempitos.size();
+				
+				for (int i = 0; i < tablaTiempitos.size(); i++)
+				{
+					suma += tablaTiempitos.get(i);
+					
+					if(tablaTiempitos.get(i) < min)
+					{
+						min = tablaTiempitos.get(i);
+					}
+					if(tablaTiempitos.get(i) > max)
+					{
+						max = tablaTiempitos.get(i);
+					}
+				}
+				
+				double promedio = (int) suma/total;
+				
+				System.out.println("El máximo tiempo en obtener un dato (milisegundos) es: " + max);
+				System.out.println("El mínimo tiempo en obtener un dato (milisegundos) es: " + min);
+				System.out.println("El tiempo promedio en obtener un dato (milisegundos) es:" + promedio);
+				
 				break;
 
 			case 4:

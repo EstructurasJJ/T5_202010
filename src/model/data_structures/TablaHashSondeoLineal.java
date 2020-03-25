@@ -28,7 +28,7 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 	}
 	
 	///////EXTRA///////
-	
+
 	private int rehashes;
 	
 	public int darRehashes()
@@ -44,6 +44,18 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 	///////////////////
 
 	//Metodos
+	
+	//Tamaño de elementos.
+	public int darDatos()
+	{
+		return Datos;
+	}
+	
+	//Capacidad de la tabla
+	public int darCapacidad()
+	{
+		return Capacidad;
+	}
 	
 	//Crear codigo de la llave.
 	private int hash(K key)
@@ -64,19 +76,19 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 
 				while(actual != null)
 				{
-					V eliminado = (V) actual.darInfoDelComparendo();
+					V eliminado = (V) actual.darData();
 					temporal.putInSet(keys[i], eliminado);
 					actual = actual.darSiguiente();
 				}
 
 			}
 		}
+		
+		this.keys = temporal.keys;
+		this.vals = temporal.vals;
 
 		this.Capacidad = temporal.Capacidad; 
 		this.Datos = temporal.Datos;
-
-		this.keys = temporal.keys;
-		this.vals = temporal.vals;
 	}
 	
 	//Añadir dato a la tabla.
@@ -94,11 +106,11 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 				rehashes++;
 			}
 
-			int i;
-
-			for (i = hash(key); keys[i] != null; i = (i+1) % Capacidad)
+			int parar = hash(key);
+			int i = parar;
+			
+			do
 			{
-
 				if (keys[i] == null)
 				{
 					vals[i] = new ListaEnlazadaQueue<>();
@@ -118,7 +130,10 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 						return;
 					}
 				}
+				
+				i = (i+1) % Capacidad;
 			}
+			while(i != parar);
 
 		}
 
@@ -130,7 +145,8 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 	{
 		if(key!=null)
 		{
-			for (int i = hash(key); keys[i] != null; i = (i+1) % Capacidad)
+			int i = hash(key);
+			for (i = hash(key); keys[i] != null; i = (i+1) % Capacidad)
 			{
 				if(keys[i].equals(key))
 				{
@@ -184,7 +200,7 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 			
 			while(actual.darSiguiente()!=null)
 			{
-				V dataEliminar = (V) actual.darInfoDelComparendo();
+				V dataEliminar = (V) actual.darData();
 				putInSet(keyAMatar, dataEliminar);
 				
 				actual.darSiguiente();

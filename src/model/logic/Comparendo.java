@@ -170,28 +170,28 @@ public class Comparendo implements Comparable<Comparendo>
 	}
 
 
-	//HASH CODE
-
-	public int hashCode()
-	{
-		int hash = 17;
-
-		hash = 31*hash + ((Integer) OBJECTID).hashCode();
-
-		hash = 31*hash + MEDIO_DETE.hashCode();
-		hash = 31*hash + CLASE_VEHI.hashCode();
-		hash = 31*hash + TIPO_SERVI.hashCode();
-		hash = 31*hash + INFRACCION.hashCode();
-		hash = 31*hash + DES_INFRAC.hashCode();
-		hash = 31*hash + LOCALIDAD.hashCode();
-		hash = 31*hash + MUNICIPIO.hashCode();
-
-		hash = 31*hash + ((Double) latitud).hashCode();
-		hash = 31*hash + ((Double) longitud).hashCode();
-
-		hash = 31*hash + FECHA_HORA.hashCode();
-
-		return hash;
-	}
+//	//HASH CODE
+//
+//	public int hashCode()
+//	{
+//		int hash = 17;
+//
+//		hash = 31*hash + ((Integer) OBJECTID).hashCode();
+//
+//		hash = 31*hash + MEDIO_DETE.hashCode();
+//		hash = 31*hash + CLASE_VEHI.hashCode();
+//		hash = 31*hash + TIPO_SERVI.hashCode();
+//		hash = 31*hash + INFRACCION.hashCode();
+//		hash = 31*hash + DES_INFRAC.hashCode();
+//		hash = 31*hash + LOCALIDAD.hashCode();
+//		hash = 31*hash + MUNICIPIO.hashCode();
+//
+//		hash = 31*hash + ((Double) latitud).hashCode();
+//		hash = 31*hash + ((Double) longitud).hashCode();
+//
+//		hash = 31*hash + FECHA_HORA.hashCode();
+//
+//		return hash;
+//	}
 
 }
