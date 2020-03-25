@@ -50,10 +50,10 @@ public class Controller {
 				capIni = Integer.parseInt(lector.next());
 				
 
-				modelo.leerGeoJson(JUEGUEMOS, capIni);
+				modelo.leerGeoJson(RUTAGEOJASON, capIni);
 
 				view.printMessage("Archivo GeoJSon Cargado");
-				view.printMessage("Numero actual de comparendos " + modelo.darHashLineal().darDatos() + "\n----------");
+				view.printMessage("Numero actual de comparendos con llaves diferentes " + modelo.darHashLineal().darDatos() + "\n----------");
 
 				//Primer Comparendo
 
@@ -61,7 +61,7 @@ public class Controller {
 				
 				//Información adicional:
 				
-				System.out.println("Número de duplas en tabla hash LinearProbing: " + modelo.darHashLineal().darDatos());
+				System.out.println("Número de duplas enlazadas en tabla hash LinearProbing: " + modelo.darHashLineal().darDatos());
 				System.out.println("Tamaño final del arreglo  de tabla hash LinearProbing: " + modelo.darHashLineal().darCapacidad());
 				System.out.println("Factor de carga en tabla hash LinearProbing: " + modelo.darHashLineal().darFactorCarga());
 				System.out.println("Número de rehashes en tabla hash LinearProbing: " + modelo.darHashLineal().darRehashes() + "\n----------");
@@ -106,11 +106,11 @@ public class Controller {
 					}
 				}
 				
-				double promedio = (int) suma/total;
+				double promedio = suma/total;
 				
 				System.out.println("El máximo tiempo en obtener un dato (milisegundos) es: " + max);
 				System.out.println("El mínimo tiempo en obtener un dato (milisegundos) es: " + min);
-				System.out.println("El tiempo promedio en obtener un dato (milisegundos) es:" + promedio);
+				System.out.println("El tiempo promedio en obtener un dato (milisegundos) es:" + promedio + "\n----------");
 				
 				break;
 

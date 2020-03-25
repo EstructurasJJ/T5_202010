@@ -19,19 +19,19 @@ public class TestModelo {
 	public void setUp() 
 	{
 		conexion = new Modelo();
-		conexion.leerGeoJson(Controller.JUEGUEMOS);
+		conexion.leerGeoJson(Controller.JUEGUEMOS,1);
 	}
 
 	@Test
 	public void testModelo() 
 	{
-		assertTrue(conexion.darDatos()!=null);
+		assertTrue(conexion.darHashLineal()!=null);
 	}
 
 	@Test
 	public void testDarTamano() 
 	{
-		assertEquals(20, conexion.darTamanio());
+		assertEquals(20, conexion.darHashLineal().darDatos());
 	}
 	
 }

@@ -33,8 +33,6 @@ public class Modelo
 	private double minLongitud = 1000000000;
 	private double maxLatitud = -1000000000;
 	private double maxLongitud = -1000000000;
-
-	private ListaEnlazadaQueue<Comparendo> booty = new ListaEnlazadaQueue<Comparendo>();
 	
 	//////NUEVO TALLER 5/////
 	private TablaHashSondeoLineal<String, Comparendo> HSLBobi;
@@ -43,7 +41,6 @@ public class Modelo
 	public Modelo()
 	{
 		parteDelComparendo = "";
-		booty = new ListaEnlazadaQueue<Comparendo>();
 	}
 
 	public double darMinLatitud()
@@ -317,20 +314,21 @@ public class Modelo
 	{
 		String key= fecha + "-" + claseV + "-" + infrac;
 		
-		Iterator<Comparendo> tablita = HSLBobi.getSet(key);
+		Comparable[] tablita = copiarComparendos(key);
+		ordenamientoPorQuickSort(tablita);
 		
-		while (tablita.hasNext())
+		for(int i = 0; i < tablita.length; i++)
 		{
-			Comparendo compi = tablita.next();
+			Comparendo compi =  (Comparendo) tablita[i];
 			
 			System.out.println("---------------------");
-			System.out.println("Object Id: " + compi.darObjectid());
+			System.out.println("ObjectID: " + compi.darObjectid());
 			System.out.println("Fecha Hora: " + compi.darFecha_Hora().toString());
 			System.out.println("Infracción: " + compi.darInfraccion());
 			System.out.println("Clase Vehiculo: " + compi.darClase_Vehi());
-			System.out.println("Localidad: " + compi.darLocalidad() + "\n----------");
-
+			System.out.println("Localidad: " + compi.darLocalidad());
 		}
+		 
 	}
 	
 	public ArrayList<Long> analisisTablaLineal()
@@ -350,13 +348,12 @@ public class Modelo
 			
 			listaTiempos.add(tiemp);
 			llaveExiste++;
-		}
-
-		int dos = (int) (Math.random() *999);
-		String llaves = "" + dos;
-		
+		}		
 		while(llaveNOExiste <= 2000)
 		{
+			int dos = (int) (Math.random() *999);
+			String llaves = "" + dos;
+			
 			long tiempo= System.currentTimeMillis();
 			HSLBobi.getSet(llaves);
 			long tiemp=System.currentTimeMillis()-tiempo;
@@ -366,7 +363,100 @@ public class Modelo
 		}
 		return listaTiempos;
 	}
+	
+	////////////////////////////////////////////////////////////////////////OBTENER COMPARENDOS ORDENADOS/////
+	
+	public Comparable[] copiarComparendos(String key)
+	{		
+		Iterator<Comparendo> tablitaTam = HSLBobi.getSet(key);
+		Iterator<Comparendo> tablita = HSLBobi.getSet(key);
+		
+		int tamaño = 0;
+		
+		while(tablitaTam.hasNext())
+		{
+			tablitaTam.next();
+			tamaño++;
+		}
+		
+		Comparable[] comparendosCopia = new Comparable[tamaño];
+		int contador = 0;
+		
+		while (tablita.hasNext())
+		{
+			Comparendo compi = tablita.next();
+			comparendosCopia[contador] = compi;
+			contador++;
+		}
+		
+		return comparendosCopia;
+	}
+	
+	
 
+	/////////////////////////////////////////////////////////////////////////////////ORDENAMIENTO//////
+	
+	//Quick Sort
+	
+	public static void ordenamientoPorQuickSort(Comparable [] a)
+	{
+		//Volverlo aleatorio
+		
+		Random rnd = ThreadLocalRandom.current();
+
+		for (int i = a.length - 1; i > 0; i--)
+		{
+			int index = rnd.nextInt(i + 1);
+			Comparable x = a[index];
+			a[index] = a[i];
+			a[i] = x;
+		}
+		
+		//Ordenarlo
+		
+		quickSort(a, 0, a.length-1);
+		
+	}
+	
+	//Ordenar las subpartes.
+	
+	private static void  quickSort(Comparable[] a, int lo, int hi)
+	{
+		if (hi<=lo) return;
+		
+		int j = partition (a,lo,hi);
+		quickSort(a,lo,j-1);
+		quickSort(a,j+1,hi);
+	}
+	
+	//Donde se parte el arreglo
+	
+	private static int partition(Comparable[] a, int lo, int hi)
+	{
+		int i=lo, j=hi+1; //Indices derecha e izquierda
+		Comparable v=a[lo];
+		
+		while (true)
+		{
+			while (a[++i].compareTo(v)<0) if (i==hi) break;
+			while (v.compareTo(a[--j])<0) if (j==lo) break;
+			if (i>=j) break;
+				exchange(a,i,j);
+		}
+		
+		exchange(a,lo,j);
+		return j;
+	}
+	
+	//Intercambio
+	
+	public static void exchange(Comparable[] copia, int pos1, int pos2)
+	{
+		Comparable tempo = copia[pos1];
+		copia[pos1] = copia[pos2];
+		copia[pos2] = tempo;
+	}
+	
 
 }
 

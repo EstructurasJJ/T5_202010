@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.LocalAttribute;
-
 //TODO Ambos
 
 public class Comparendo implements Comparable<Comparendo>
@@ -152,14 +150,14 @@ public class Comparendo implements Comparable<Comparendo>
 
 	public int compareTo(Comparendo compi) 
 	{
-		double latitud1 = latitud;
-		double latitud2 = compi.darLatitud();
+		double id1 = OBJECTID;
+		double id2 = compi.darObjectid();
 
-		if(latitud1 > latitud2)
+		if(id1 > id2)
 		{
 			return 1;
 		}
-		else if(latitud1 < latitud2)
+		else if(id1 < id2)
 		{
 			return -1;
 		}
