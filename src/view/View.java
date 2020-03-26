@@ -17,7 +17,9 @@ public class View
 			System.out.println("1. Cargar datos.");
 			System.out.println("2. Buscar tiempos de viaje por fecha, clase de vehículo e infracción (Tabla de Hash Linear Probing)");
 			System.out.println("3. Pruebas de desempeño - Tabla de Hash Linear Probing");
-			System.out.println("4. Exit");
+			System.out.println("4. Buscar tiempos de viaje por fecha, clase de vehículo e infracción (Tabla de Hash Separate Chaining)");
+			System.out.println("5. Pruebas de desempeño - Tabla de Hash Separate Chaining");
+			System.out.println("6. Exit");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}
 

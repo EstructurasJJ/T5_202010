@@ -67,7 +67,6 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 	private void resize(int cap)
 	{
 		TablaHashSondeoLineal<K, V> temporal = new TablaHashSondeoLineal<K, V>(cap);
-
 		for (int i = 0; i < Capacidad; i++)
 		{
 			if (keys[i] != null)

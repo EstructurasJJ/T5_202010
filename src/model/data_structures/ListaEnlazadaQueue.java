@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import model.logic.Comparendo;
 
-public class ListaEnlazadaQueue <T extends Comparable<T>>
+public class ListaEnlazadaQueue <T extends Comparable<T>> implements Iterable
 {
 	
 	private int tamanio;
@@ -110,7 +110,6 @@ public class ListaEnlazadaQueue <T extends Comparable<T>>
 			actual=actual.darSiguiente();
 			return dat;
 		}
-	
-		
+
 	}
 }

@@ -20,6 +20,7 @@ import com.google.gson.JsonSyntaxException;
 
 import model.data_structures.ListaEnlazadaQueue;
 import model.data_structures.Node;
+import model.data_structures.TablaHashEncSeparado;
 import model.data_structures.TablaHashSondeoLineal;
 
 
@@ -36,6 +37,7 @@ public class Modelo
 	
 	//////NUEVO TALLER 5/////
 	private TablaHashSondeoLineal<String, Comparendo> HSLBobi;
+	private TablaHashEncSeparado<String, Comparendo> HSCJuanjo;
 	/////////////////////////
 
 	public Modelo()
@@ -64,6 +66,7 @@ public class Modelo
 	{	
 		//////NUEVO TALLER 5//////
 		HSLBobi = new TablaHashSondeoLineal<String, Comparendo>(capIni);
+		HSCJuanjo= new TablaHashEncSeparado<String, Comparendo>(capIni);
 		//////////////////////////
 		
 		JsonParser parser = new JsonParser();
@@ -285,6 +288,7 @@ public class Modelo
 			key = key + "-" + compaAgregar.darClase_Vehi() + "-" + compaAgregar.darInfraccion();
 			
 			HSLBobi.putInSet(key, compaAgregar);
+			HSCJuanjo.putInSet(key, compaAgregar);
 			
 			key = "";
 			////////////////////////
@@ -309,6 +313,11 @@ public class Modelo
 	{
 		return HSLBobi;
 	}
+	
+	public TablaHashEncSeparado<String, Comparendo> darHashEncadenado()
+	{
+		return HSCJuanjo;
+	}
 
 	public void busquedaLinealHash(String fecha, String claseV, String infrac)
 	{
@@ -330,6 +339,17 @@ public class Modelo
 		}
 		 
 	}
+	
+	public Comparable[] buscarClusterEncadenado(String fecha, String claseV, String infrac)
+	{
+		String key = fecha +"-"+claseV+"-"+"infrac";
+		
+		Comparable[] comparendos=copiarComparendosEncadenados(key);
+		ordenamientoPorQuickSort(comparendos);
+		
+		return comparendos;
+	}
+	
 	
 	public ArrayList<Long> analisisTablaLineal()
 	{
@@ -364,6 +384,38 @@ public class Modelo
 		return listaTiempos;
 	}
 	
+	public ArrayList<Long> tiemposTablaEncadenada()
+	{
+		ArrayList<Long> respuesta = new ArrayList<Long>();
+		int enLista=0,fueraDeLista=0;
+		
+		Iterator<String> iter = HSCJuanjo.keys();
+		
+		while(iter.hasNext() && enLista <= 8000)
+		{
+			long tiempo= System.currentTimeMillis();
+			HSCJuanjo.getSet(iter.next());
+			long tiemp=System.currentTimeMillis()-tiempo;
+			
+			respuesta.add(tiemp);
+			enLista++;
+		}		
+		
+		while (fueraDeLista<=2000)
+		{
+			int dos = (int) (Math.random() *999);
+			String llaves = "" + dos;
+			
+			long tiempo= System.currentTimeMillis();
+			HSCJuanjo.getSet(llaves);
+			long tiemp=System.currentTimeMillis()-tiempo;
+			
+			respuesta.add(tiemp);
+			fueraDeLista++;
+		}
+		return respuesta;
+	}
+	
 	////////////////////////////////////////////////////////////////////////OBTENER COMPARENDOS ORDENADOS/////
 	
 	public Comparable[] copiarComparendos(String key)
@@ -392,6 +444,29 @@ public class Modelo
 		return comparendosCopia;
 	}
 	
+	
+	public Comparable[] copiarComparendosEncadenados(String key)
+	{
+		Iterator<Comparendo> comparendos = HSCJuanjo.getSet(key), sizeComparendos=HSCJuanjo.getSet(key);
+		
+		int s=0;
+		
+		while(sizeComparendos.hasNext())
+		{
+			sizeComparendos.next();
+			s++;
+		}
+		Comparable[] respuesta =  new Comparable[s];
+		int contador=0;
+		while (comparendos.hasNext())
+		{
+			Comparendo aux = comparendos.next();
+			respuesta[contador] = aux;
+			contador++;
+		}
+		
+		return respuesta;
+	}
 	
 
 	/////////////////////////////////////////////////////////////////////////////////ORDENAMIENTO//////
