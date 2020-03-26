@@ -337,12 +337,15 @@ public class Modelo
 			System.out.println("Clase Vehiculo: " + compi.darClase_Vehi());
 			System.out.println("Localidad: " + compi.darLocalidad());
 		}
+		
+		System.out.println("---------------------");
+		System.out.println("Total de comparendos: " + tablita.length);
 		 
 	}
 	
 	public Comparable[] buscarClusterEncadenado(String fecha, String claseV, String infrac)
 	{
-		String key = fecha +"-"+claseV+"-"+"infrac";
+		String key = fecha +"-"+claseV+"-"+ infrac;
 		
 		Comparable[] comparendos=copiarComparendosEncadenados(key);
 		ordenamientoPorQuickSort(comparendos);

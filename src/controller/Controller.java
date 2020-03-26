@@ -55,9 +55,6 @@ public class Controller {
 				view.printMessage("Archivo GeoJSon Cargado");
 				view.printMessage("Numero actual de comparendos con llaves diferentes " + modelo.darHashLineal().darDatos() + "\n----------");
 
-				//Primer Comparendo
-
-				//Último Comparendo
 
 				//Información adicional:
 

@@ -126,6 +126,7 @@ public class TablaHashSondeoLineal <K extends Comparable<K> ,V extends Comparabl
 					if (keys[i].equals(key))
 					{
 						vals[i].enqueue(valor);
+						Datos++;
 						return;
 					}
 				}
